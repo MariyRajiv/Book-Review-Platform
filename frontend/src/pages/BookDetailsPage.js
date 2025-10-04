@@ -172,7 +172,7 @@ const BookDetailsPage = () => {
     return Object.entries(stats.sentiment_distribution).map(([sentiment, count]) => ({
       name: sentiment.charAt(0).toUpperCase() + sentiment.slice(1),
       value: count,
-      color: colors[sentiment]
+      fill: colors[sentiment]
     }));
   };
 
