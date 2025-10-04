@@ -161,7 +161,7 @@ class BookReviewPlatformTester:
             return True, response['id']
         else:
             error_msg = response.get('error', 'Failed to create book')
-            self.log_test("Create Book", False, error_msg, 201, 
+            self.log_test("Create Book", False, error_msg, 200, 
                          response.get('status_code'))
             return False, None
 
