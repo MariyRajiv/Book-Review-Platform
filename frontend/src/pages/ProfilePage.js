@@ -51,8 +51,10 @@ const ProfilePage = () => {
       const response = await axios.get(`${BACKEND_URL}/api/books?limit=100`);
       const userBooks = response.data.filter(book => book.added_by === user?.id);
       setMyBooks(userBooks);
+      return userBooks;
     } catch (error) {
       console.error('Failed to fetch user books');
+      return [];
     }
   };
 
