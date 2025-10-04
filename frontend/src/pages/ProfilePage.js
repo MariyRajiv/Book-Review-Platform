@@ -85,7 +85,7 @@ const ProfilePage = () => {
       }
       
       setMyReviews(userReviews);
-      calculateStats(userBooks, userReviews);
+      calculateStats(myBooks, userReviews);
     } catch (error) {
       console.error('Failed to fetch user reviews');
     }
