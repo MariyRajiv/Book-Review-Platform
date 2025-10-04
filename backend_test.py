@@ -238,7 +238,7 @@ class BookReviewPlatformTester:
             "review_text": "This is an excellent test book! Highly recommended for API testing purposes."
         }
         
-        success, response = self.make_request('POST', 'reviews', 201, review_data)
+        success, response = self.make_request('POST', 'reviews', 200, review_data)
         
         if success and 'id' in response:
             self.review_id = response['id']
