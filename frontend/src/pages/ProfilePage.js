@@ -34,10 +34,10 @@ const ProfilePage = () => {
   const fetchUserData = async () => {
     setLoading(true);
     try {
-      await Promise.all([
-        fetchMyBooks(),
-        fetchMyReviews()
-      ]);
+      // Fetch books first, then reviews, then calculate stats
+      const userBooks = await fetchMyBooks();
+      const userReviews = await fetchMyReviews();
+      calculateStats(userBooks, userReviews);
     } catch (error) {
       toast.error('Failed to load profile data');
     } finally {
