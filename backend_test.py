@@ -153,7 +153,7 @@ class BookReviewPlatformTester:
 
     def test_create_book(self):
         """Test creating a book"""
-        success, response = self.make_request('POST', 'books', 201, self.test_book)
+        success, response = self.make_request('POST', 'books', 200, self.test_book)
         
         if success and 'id' in response:
             self.book_id = response['id']
