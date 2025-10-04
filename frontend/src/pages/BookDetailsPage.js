@@ -501,11 +501,12 @@ const BookDetailsPage = () => {
                               cy="50%"
                               outerRadius={80}
                               label={({name, value}) => `${name}: ${value}`}
-                            >
-                              {prepareSentimentData().map((entry, index) => (
-                                <Cell key={`cell-${index}`} fill={entry.color} />
-                              ))}
-                            </Pie>
+                              labelStyle={{ 
+                                fontSize: '14px', 
+                                fontWeight: 'bold',
+                                fill: '#1f2937'
+                              }}
+                            />
                             <Tooltip />
                           </PieChart>
                         </ResponsiveContainer>
