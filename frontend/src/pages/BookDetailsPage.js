@@ -24,7 +24,7 @@ const BookDetailsPage = () => {
   const [newReview, setNewReview] = useState({ rating: '', review_text: '' });
   const [editingReview, setEditingReview] = useState(null);
 
- const BACKEND_URL = "http://localhost:5000"; // local backend
+ const BACKEND_URL = "https://book-review-platform-1-htw9.onrender.com"; // local backend
 
   useEffect(() => {
     fetchBookDetails();
