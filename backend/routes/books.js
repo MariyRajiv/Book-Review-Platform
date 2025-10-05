@@ -1,3 +1,4 @@
+// src/backend/routes/books.js
 import express from 'express';
 import { authMiddleware } from '../middleware/auth.js';
 import * as bookController from '../controllers/bookController.js';
@@ -10,7 +11,7 @@ router.get('/', bookController.listBooks);
 // Get genres for books
 router.get('/genres', bookController.getGenres);
 
-// Book CRUD
+// Book CRUD routes
 router.post('/', authMiddleware, bookController.createBook);
 router.get('/:id', bookController.getBook);
 router.get('/:id/reviews', bookController.getBookReviews);
