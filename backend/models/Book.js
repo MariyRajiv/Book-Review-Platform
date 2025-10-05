@@ -11,6 +11,6 @@ const BookSchema = new mongoose.Schema({
   created_at: { type: Date, default: Date.now }
 }, { collection: 'books' });
 
-const Book = mongoose.model('Book', bookSchema);
+const Book = mongoose.model('Book', BookSchema);
 
 export default Book; 
