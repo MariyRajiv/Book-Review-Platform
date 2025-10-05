@@ -10,4 +10,6 @@ const ReviewSchema = new mongoose.Schema({
   updated_at: { type: Date }
 }, { collection: 'reviews' });
 
-module.exports = mongoose.model('Review', ReviewSchema);
+const Review = mongoose.model('Review', ReviewSchema);
+
+export default Review;
