@@ -25,7 +25,7 @@ const ProfilePage = () => {
     ratingDistribution: {}
   });
 
-  const BACKEND_URL = "http://localhost:5000"; // local backend
+  const BACKEND_URL = "https://book-review-platform-1-htw9.onrender.com"; // local backend
 
   useEffect(() => {
     fetchUserData();
