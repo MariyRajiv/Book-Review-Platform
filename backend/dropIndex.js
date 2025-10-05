@@ -1,18 +1,24 @@
-const mongoose = require('mongoose');
+// dropIndex.js
+import mongoose from 'mongoose';
+
+const MONGODB_URI = 'mongodb+srv://vasantigoli3107_db_user:UjFlaF9vySOvY6Id@cluster0.w0tutyn.mongodb.net/tts_db?retryWrites=true&w=majority&appName=Cluster0';
 
 (async () => {
   try {
-    // connect to your MongoDB Atlas
-    await mongoose.connect('mongodb+srv://vasantigoli3107_db_user:UjFlaF9vySOvY6Id@cluster0.w0tutyn.mongodb.net/tts_db?retryWrites=true&w=majority&appName=Cluster0');
+    await mongoose.connect(MONGODB_URI, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
 
     console.log('✅ Connected to MongoDB');
 
     const result = await mongoose.connection.db.collection('users').dropIndex('id_1');
-    console.log('🗑️  Dropped index:', result);
+    console.log('🗑️ Dropped index:', result);
 
     await mongoose.disconnect();
     console.log('✅ Done!');
   } catch (err) {
     console.error('❌ Error:', err.message);
+    process.exit(1);
   }
 })();
