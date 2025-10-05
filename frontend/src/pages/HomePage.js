@@ -23,7 +23,7 @@ const HomePage = () => {
   const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
-  const BACKEND_URL = "http://localhost:5000";
+  const BACKEND_URL = "https://book-review-platform-1-htw9.onrender.com";
 
   useEffect(() => {
     fetchBooks();
