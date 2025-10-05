@@ -7,4 +7,4 @@ router.post('/signup', authController.signup);
 router.post('/login', authController.login);
 router.get('/me', authMiddleware, authController.me);
 
-module.exports = router;
+export default router;
