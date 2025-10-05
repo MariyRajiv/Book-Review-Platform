@@ -1,6 +1,7 @@
-const Review = require('../models/Review');
-const Book = require('../models/Book');
-const mongoose = require('mongoose');
+import Review from '../models/Review.js';
+import Book from '../models/Book.js';
+import mongoose from 'mongoose';
+
 
 exports.createReview = async (req, res) => {
   try {
