@@ -1,7 +1,9 @@
-const express = require('express');
+// src/backend/routes/reviews.js
+import express from 'express';
+import { authMiddleware } from '../middleware/auth.js';
+import * as reviewController from '../controllers/reviewController.js';
+
 const router = express.Router();
-const { authMiddleware } = require('../middleware/auth');
-const reviewController = require('../controllers/reviewController');
 
 router.post('/', authMiddleware, reviewController.createReview);
 router.put('/:id', authMiddleware, reviewController.updateReview);
