@@ -1,6 +1,7 @@
 {
   "name": "bookreview-backend",
   "version": "1.0.0",
+  "type": "module",
   "description": "Backend for Book Review Platform (Express + MongoDB) - matches the provided frontend",
   "main": "server.js",
   "scripts": {
