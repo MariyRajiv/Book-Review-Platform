@@ -24,7 +24,7 @@ const BookDetailsPage = () => {
   const [newReview, setNewReview] = useState({ rating: '', review_text: '' });
   const [editingReview, setEditingReview] = useState(null);
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+ const BACKEND_URL = "http://localhost:5000"; // local backend
 
   useEffect(() => {
     fetchBookDetails();
@@ -491,25 +491,27 @@ const BookDetailsPage = () => {
                     {stats.sentiment_distribution && Object.values(stats.sentiment_distribution).some(count => count > 0) && (
                       <div>
                         <h4 className="font-medium mb-3">Sentiment Analysis</h4>
-                        <ResponsiveContainer width="100%" height={200}>
-                          <PieChart>
-                            <Pie
-                              data={prepareSentimentData()}
-                              dataKey="value"
-                              nameKey="name"
-                              cx="50%"
-                              cy="50%"
-                              outerRadius={80}
-                              label={({name, value}) => `${name}: ${value}`}
-                              labelStyle={{ 
-                                fontSize: '14px', 
-                                fontWeight: 'bold',
-                                fill: '#1f2937'
-                              }}
-                            />
-                            <Tooltip />
-                          </PieChart>
-                        </ResponsiveContainer>
+                       <ResponsiveContainer width="100%" height={200}>
+  <PieChart>
+    <Pie
+      data={prepareSentimentData()}
+      dataKey="value"
+      nameKey="name"
+      cx="50%"
+      cy="50%"
+      innerRadius={35}   // donut style
+      outerRadius={55}
+      label={({ name, value }) => `${name}: ${value}`}
+      labelLine={false}  // remove the outside lines
+    >
+      {prepareSentimentData().map((entry, index) => (
+        <Cell key={`cell-${index}`} fill={entry.fill} />
+      ))}
+    </Pie>
+    <Tooltip />
+  </PieChart>
+</ResponsiveContainer>
+
                       </div>
                     )}
 

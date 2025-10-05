@@ -15,89 +15,68 @@ import ProfilePage from './pages/ProfilePage';
 
 // Auth Context
 const AuthContext = createContext();
-
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
-    throw new Error('useAuth must be used within an AuthProvider');
-  }
+  if (!context) throw new Error('useAuth must be used within an AuthProvider');
   return context;
 };
 
 // Theme Context
 const ThemeContext = createContext();
-
 export const useTheme = () => {
   const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error('useTheme must be used within a ThemeProvider');
-  }
+  if (!context) throw new Error('useTheme must be used within a ThemeProvider');
   return context;
 };
+
+// Backend base URL
+const BACKEND_URL = "http://localhost:5000"; // local backend
+
+// Set axios default baseURL
+axios.defaults.baseURL = BACKEND_URL;
 
 // Auth Provider
 function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
-
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Set default authorization header
       axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-      
-      // Verify token
-      axios.get(`${BACKEND_URL}/api/auth/me`)
-        .then(response => {
-          setUser(response.data);
-        })
+      axios.get('/api/auth/me')
+        .then(res => setUser(res.data))
         .catch(() => {
           localStorage.removeItem('token');
           delete axios.defaults.headers.common['Authorization'];
         })
-        .finally(() => {
-          setLoading(false);
-        });
-    } else {
-      setLoading(false);
-    }
-  }, [BACKEND_URL]);
+        .finally(() => setLoading(false));
+    } else setLoading(false);
+  }, []);
 
   const login = async (credentials) => {
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/auth/login`, credentials);
-      const { access_token, user: userData } = response.data;
-      
+      const res = await axios.post('/api/auth/login', credentials);
+      const { access_token, user: userData } = res.data;
       localStorage.setItem('token', access_token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
       setUser(userData);
-      
       return { success: true };
-    } catch (error) {
-      return { 
-        success: false, 
-        error: error.response?.data?.detail || 'Login failed' 
-      };
+    } catch (err) {
+      return { success: false, error: err.response?.data?.detail || 'Login failed' };
     }
   };
 
   const signup = async (userData) => {
     try {
-      const response = await axios.post(`${BACKEND_URL}/api/auth/signup`, userData);
-      const { access_token, user: newUser } = response.data;
-      
+      const res = await axios.post('/api/auth/signup', userData);
+      const { access_token, user: newUser } = res.data;
       localStorage.setItem('token', access_token);
       axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
       setUser(newUser);
-      
       return { success: true };
-    } catch (error) {
-      return { 
-        success: false, 
-        error: error.response?.data?.detail || 'Signup failed' 
-      };
+    } catch (err) {
+      return { success: false, error: err.response?.data?.detail || 'Signup failed' };
     }
   };
 
@@ -116,10 +95,7 @@ function AuthProvider({ children }) {
 
 // Theme Provider
 function ThemeProvider({ children }) {
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('theme');
-    return saved || 'light';
-  });
+  const [theme, setTheme] = useState(() => localStorage.getItem('theme') || 'light');
 
   useEffect(() => {
     localStorage.setItem('theme', theme);
@@ -127,9 +103,7 @@ function ThemeProvider({ children }) {
     document.documentElement.classList.add(theme);
   }, [theme]);
 
-  const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light');
-  };
+  const toggleTheme = () => setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
@@ -138,33 +112,17 @@ function ThemeProvider({ children }) {
   );
 }
 
-// Protected Route Component
+// Protected Route
 function ProtectedRoute({ children }) {
   const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-lg font-medium text-teal-600">Loading...</div>
-      </div>
-    );
-  }
-
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-teal-600 animate-pulse">Loading...</div>;
   return user ? children : <Navigate to="/landing" replace />;
 }
 
-// Public Route Component (redirect to home if authenticated)
+// Public Route
 function PublicRoute({ children }) {
   const { user, loading } = useAuth();
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="animate-pulse text-lg font-medium text-teal-600">Loading...</div>
-      </div>
-    );
-  }
-
+  if (loading) return <div className="min-h-screen flex items-center justify-center text-teal-600 animate-pulse">Loading...</div>;
   return user ? <Navigate to="/" replace /> : children;
 }
 
@@ -175,70 +133,14 @@ function App() {
         <div className="App">
           <Router>
             <Routes>
-              <Route 
-                path="/landing" 
-                element={
-                  <PublicRoute>
-                    <LandingPage />
-                  </PublicRoute>
-                } 
-              />
-              <Route 
-                path="/login" 
-                element={
-                  <PublicRoute>
-                    <LoginPage />
-                  </PublicRoute>
-                } 
-              />
-              <Route 
-                path="/signup" 
-                element={
-                  <PublicRoute>
-                    <SignupPage />
-                  </PublicRoute>
-                } 
-              />
-              <Route 
-                path="/" 
-                element={
-                  <ProtectedRoute>
-                    <HomePage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/book/:id" 
-                element={
-                  <ProtectedRoute>
-                    <BookDetailsPage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/add-book" 
-                element={
-                  <ProtectedRoute>
-                    <AddEditBookPage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/edit-book/:id" 
-                element={
-                  <ProtectedRoute>
-                    <AddEditBookPage />
-                  </ProtectedRoute>
-                } 
-              />
-              <Route 
-                path="/profile" 
-                element={
-                  <ProtectedRoute>
-                    <ProfilePage />
-                  </ProtectedRoute>
-                } 
-              />
+              <Route path="/landing" element={<PublicRoute><LandingPage /></PublicRoute>} />
+              <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+              <Route path="/signup" element={<PublicRoute><SignupPage /></PublicRoute>} />
+              <Route path="/" element={<ProtectedRoute><HomePage /></ProtectedRoute>} />
+              <Route path="/book/:id" element={<ProtectedRoute><BookDetailsPage /></ProtectedRoute>} />
+              <Route path="/add-book" element={<ProtectedRoute><AddEditBookPage /></ProtectedRoute>} />
+              <Route path="/edit-book/:id" element={<ProtectedRoute><AddEditBookPage /></ProtectedRoute>} />
+              <Route path="/profile" element={<ProtectedRoute><ProfilePage /></ProtectedRoute>} />
               <Route path="*" element={<Navigate to="/landing" replace />} />
             </Routes>
           </Router>

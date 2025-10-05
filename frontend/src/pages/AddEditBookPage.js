@@ -29,7 +29,7 @@ const AddEditBookPage = () => {
   const [pageLoading, setPageLoading] = useState(isEditMode);
   const [genres, setGenres] = useState([]);
 
-  const BACKEND_URL = process.env.REACT_APP_BACKEND_URL;
+ const BACKEND_URL = "http://localhost:5000"; // local backend
 
   const commonGenres = [
     'Fiction', 'Non-Fiction', 'Mystery', 'Romance', 'Science Fiction', 'Fantasy',
@@ -46,13 +46,14 @@ const AddEditBookPage = () => {
   }, [id, isEditMode]);
 
   const fetchGenres = async () => {
-    try {
-      const response = await axios.get(`${BACKEND_URL}/api/genres`);
-      setGenres(response.data.genres || []);
-    } catch (error) {
-      console.error('Failed to fetch genres');
-    }
-  };
+  try {
+    const response = await axios.get(`${BACKEND_URL}/api/books/genres`);
+    setGenres(response.data.genres || []);
+  } catch (error) {
+    console.error('Failed to fetch genres');
+  }
+};
+
 
   const fetchBookDetails = async () => {
     try {
