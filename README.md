@@ -1,193 +1,168 @@
-# Book Review Platform
 
-A platform for users to discover, review, and share their thoughts on books.
 
-## Features and Functionality
+# 📚 Book Review Platform
 
-*   **User Authentication:** Secure signup and login functionality using bcrypt and JWT.
-    *   Located in `backend/controllers/authController.js`
-    *   Routes defined in `backend/routes/auth.js`
-*   **Book Management:** Create, read, update, and delete books.
-    *   Controller logic in `backend/controllers/bookController.js`
-    *   Data model defined in `backend/models/Book.js`
-    *   Routes defined in `backend/routes/books.js`
-*   **Review System:** Users can submit reviews with ratings for books. Each user can submit only one review per book.
-    *   Controller logic in `backend/controllers/reviewController.js`
-    *   Data model defined in `backend/models/Review.js`
-    *   Routes defined in `backend/routes/reviews.js`
-*   **Book Listing and Filtering:** Browse books with search, genre filters, and sorting options.
-    *   Implemented in `backend/controllers/bookController.js`
-*   **Genre Listing:** Fetch distinct book genres from the database.
-    *   Implemented in `backend/controllers/bookController.js`
-*   **Book Statistics:** View rating distributions and sentiment analysis for individual books.
-    *   Implemented in `backend/controllers/bookController.js`
-*   **User Profile:** View books added and reviews written by the user.
-    *   Accessed through frontend `ProfilePage.js`
-*   **Theme Toggle:** Users can switch between light and dark themes.
-    *   Managed in `frontend/src/App.js` and `frontend/src/components/ui`
-*   **Protected Routes:** Authentication middleware restricts access to certain routes.
-    *   Implemented in `backend/middleware/auth.js`
-*   **Frontend UI Components:** Utilizes Radix UI primitives for a consistent and accessible user interface.
-    *   Located in `frontend/src/components/ui`
-*   **Toaster Notifications:** Displays user-friendly notifications for successful actions and errors using `sonner`.
-    *   Implemented in `frontend/src/App.js`
-*   **Backend Health Check:** An API endpoint `/api/health` to check the backend status.
-    *   Implemented in `backend/server.js`
+A full-stack platform where users can **discover**, **review**, and **share** their thoughts on books. Built with **Node.js**, **MongoDB**, and **React**, it features authentication, book management, review system, and more.
 
-## Technology Stack
 
-*   **Backend:**
-    *   Node.js
-    *   Express.js
-    *   Mongoose
-    *   MongoDB
-    *   bcryptjs
-    *   jsonwebtoken
-    *   dotenv
-    *   cors
-    *   helmet
-    *   morgan
-*   **Frontend:**
-    *   React
-    *   React Router
-    *   Axios
-    *   Tailwind CSS
-    *   Radix UI
-    *   sonner
-    *   recharts
+## ✨ Features
 
-## Prerequisites
+* 🔐 **User Authentication** — Signup/Login with hashed passwords and JWT.
+* 📚 **Book Management** — Add, edit, delete, and browse books.
+* 📝 **Review System** — Submit one review per book with ratings.
+* 🎯 **Filtering & Sorting** — Search books, filter by genre, and sort by title, year, or rating.
+* 📊 **Book Statistics** — View rating distribution & sentiment analysis.
+* 👤 **User Profile** — See your added books and written reviews.
+* 🌗 **Theme Toggle** — Switch between light and dark mode.
+* 🚫 **Protected Routes** — Access control using authentication middleware.
+* 🔔 **Toaster Notifications** — Feedback for success and error actions.
+* ⚙️ **Health Check** — API endpoint to check server status.
 
-*   Node.js (version 18 or higher)
-*   npm or yarn
-*   MongoDB
+---
 
-## Installation Instructions
+## 🛠️ Tech Stack
 
-1.  **Clone the repository:**
+### 🔧 Backend
 
-    ```bash
-    git clone https://github.com/MariyRajiv/Book-Review-Platform.git
-    cd Book-Review-Platform
-    ```
+* **Node.js**, **Express.js**
+* **MongoDB**, **Mongoose**
+* **JWT**, **bcryptjs**
+* **dotenv**, **helmet**, **cors**, **morgan**
 
-2.  **Backend Setup:**
+### 🎨 Frontend
 
-    ```bash
-    cd backend
-    npm install # or yarn install
-    ```
+* **React**, **React Router**
+* **Tailwind CSS**, **Radix UI**
+* **Axios**, **Sonner**, **Recharts**
 
-3.  **Configure Environment Variables:**
+---
 
-    *   Create a `.env` file in the `backend` directory.
-    *   Add the following variables, replacing the values with your actual configurations:
+## 🚀 Getting Started
 
-        ```
-        PORT=5000 # Or any other available port
-        MONGODB_URI=mongodb+srv://<your_username>:<your_password>@<your_cluster>.mongodb.net/<your_database>?retryWrites=true&w=majority&appName=Cluster0 # Replace with your MongoDB connection string
-        JWT_SECRET=your_secret_key # Replace with a strong, random secret key
-        JWT_EXPIRES_IN=7d # Token expiration time (e.g., 7d for 7 days)
-        CORS_ORIGIN=* #or specify your frontend url for production
-        ```
+### ✅ Prerequisites
 
-4.  **Start the Backend Server:**
+* [Node.js](https://nodejs.org/) (v18+)
+* [npm](https://www.npmjs.com/) or [yarn](https://yarnpkg.com/)
+* [MongoDB](https://www.mongodb.com/)
 
-    ```bash
-    npm run start # or yarn start
-    ```
+---
 
-5.  **Frontend Setup:**
+### 📥 Installation
 
-    ```bash
-    cd ../frontend
-    npm install # or yarn install
-    ```
+```bash
+git clone https://github.com/MariyRajiv/Book-Review-Platform.git
+cd Book-Review-Platform
+```
 
-6.  **Start the Frontend Development Server:**
+#### 🔌 Backend Setup
 
-    ```bash
-    npm run start # or yarn start
-    ```
+```bash
+cd backend
+npm install # or yarn install
+```
 
-## Usage Guide
+1. Create a `.env` file in the `backend` directory:
 
-1.  **Access the Application:**
+```env
+PORT=5000
+MONGODB_URI=your_mongodb_uri
+JWT_SECRET=your_jwt_secret
+JWT_EXPIRES_IN=7d
+CORS_ORIGIN=* # or specify your frontend URL
+```
 
-    *   Open your web browser and navigate to the address where the frontend development server is running (typically `http://localhost:3000`).
+2. Start the backend server:
 
-2.  **User Authentication:**
+```bash
+npm run start # or yarn start
+```
 
-    *   **Signup:** Create a new account by providing your name, email, and password.
-    *   **Login:** Sign in with your registered email and password.
+#### 💻 Frontend Setup
 
-3.  **Browse Books:**
+```bash
+cd ../frontend
+npm install # or yarn install
+npm run start # or yarn start
+```
 
-    *   View a list of books on the home page.
-    *   Use the search bar and genre filters to narrow down your results.
-    *   Sort books based on various criteria (e.g., title, rating, publication year).
+---
 
-4.  **Add a Book:**
+## 💡 Usage Guide
 
-    *   Click the "Add Book" button.
-    *   Fill out the book details form and submit. (Requires authentication).
+1. Visit `http://localhost:3000`
+2. **Signup/Login** to get started
+3. **Browse Books** using search, filters, and sorting
+4. **Add or View Book Details**
+5. **Write/Manage Reviews** *(one per book)*
+6. **Check Book Stats** including rating and sentiment analysis
+7. View your **Profile** with added books and reviews
+8. Toggle between **Light/Dark Mode**
 
-5.  **View Book Details:**
+---
 
-    *   Click on a book to view its details, reviews, and statistics.
+## 📦 API Endpoints
 
-6.  **Write a Review:**
+### 🔐 Authentication
 
-    *   On the book details page, submit your review with a rating. (Requires authentication).
+* `POST /api/auth/signup` – Register a user
+* `POST /api/auth/login` – Login user
+* `GET /api/auth/me` – Get authenticated user
 
-7.  **Edit/Delete a Book or Review:**
+### 📚 Books
 
-    *   Only the user who added the book or wrote the review can edit or delete it.
+* `GET /api/books` – List books (with filters)
+* `GET /api/books/genres` – Get distinct genres
+* `POST /api/books` – Add a book *(auth required)*
+* `GET /api/books/:id` – Get book details
+* `PUT /api/books/:id` – Update a book *(owner only)*
+* `DELETE /api/books/:id` – Delete a book *(owner only)*
+* `GET /api/books/:id/reviews` – Get all reviews for a book
+* `GET /api/books/:id/stats` – Get stats (ratings & sentiment)
 
-8.  **User Profile:**
+### 📝 Reviews
 
-    *   Access the profile page to view your added books and written reviews.
+* `POST /api/reviews` – Add a review *(auth required)*
+* `PUT /api/reviews/:id` – Update a review *(owner only)*
+* `DELETE /api/reviews/:id` – Delete a review *(owner only)*
 
-9.  **Switch Theme:**
+### 🛠️ Health Check
 
-    *   Click the theme toggle button (sun/moon icon) to switch between light and dark themes.
+* `GET /api/health` – Backend status check
 
-## API Documentation
+---
 
-The backend exposes the following API endpoints:
+## 📁 Project Structure
 
-*   **Authentication:**
-    *   `POST /api/auth/signup`: Register a new user.  Requires `name`, `email`, and `password` in the request body. Returns `access_token` and user details.
-    *   `POST /api/auth/login`: Authenticate an existing user. Requires `email` and `password` in the request body. Returns `access_token` and user details.
-    *   `GET /api/auth/me`: Get the currently authenticated user's information.  Requires a valid `Authorization` header with a Bearer token.  Returns user details.
-*   **Books:**
-    *   `GET /api/books`: List books with optional filters (pagination, search, genre, sorting). Query parameters are `page`, `limit`, `search`, `genre`, `sort_by`, and `sort_order`. Returns an array of book objects.
-    *   `GET /api/books/genres`: Get a list of available book genres. Returns an object with a `genres` array.
-    *   `POST /api/books`: Create a new book. Requires authentication (Bearer token).  Requires `title`, `author`, `description`, `genre`, and `published_year` in the request body. Returns the created book object.
-    *   `GET /api/books/:id`: Get details of a specific book. Returns a book object.
-    *   `PUT /api/books/:id`: Update a book. Requires authentication (Bearer token) and the book must be added by the current user. Requires `title`, `author`, `description`, `genre`, and `published_year` in the request body.  Returns the updated book object.
-    *   `DELETE /api/books/:id`: Delete a book. Requires authentication (Bearer token) and the book must be added by the current user.  Returns a success message.
-    *   `GET /api/books/:id/reviews`: Get all reviews for a specific book. Returns an array of review objects.
-    *   `GET /api/books/:id/stats`: Get statistics for a specific book (rating distribution, sentiment analysis).  Returns an object with statistics.
-*   **Reviews:**
-    *   `POST /api/reviews`: Create a new review. Requires authentication (Bearer token). Requires `book_id`, `rating`, and `review_text` in the request body.  Returns the created review object.
-    *   `PUT /api/reviews/:id`: Update a review. Requires authentication (Bearer token) and the review must be written by the current user. Requires `rating` and `review_text` in the request body.  Returns a success message.
-    *   `DELETE /api/reviews/:id`: Delete a review. Requires authentication (Bearer token) and the review must be written by the current user.  Returns a success message.
-*   **Health Check:**
-    *   `GET /api/health`: Checks the health of the backend.
+```bash
+Book-Review-Platform/
+├── backend/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── middleware/
+│   ├── server.js
+│   └── .env
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── App.js
+│   │   └── index.js
+├── README.md
+└── package.json
+```
 
-## Contributing Guidelines
+---
 
-1.  Fork the repository.
-2.  Create a new branch for your feature or bug fix.
-3.  Make your changes and commit them with descriptive commit messages.
-4.  Test your changes thoroughly.
-5.  Submit a pull request to the `main` branch.
+## 🙌 Contributing
 
-## License Information
+We welcome contributions!
 
-This project has no specified license.
+1. 🍴 Fork the repository
+2. 🛠 Create a feature branch
+3. 💬 Commit descriptive messages
+4. ✅ Test your changes
+5. 📩 Open a Pull Request to `main`
 
-## Contact/Support Information
+---
 
-For questions, bug reports, or feature requests, please create an issue on the GitHub repository.
